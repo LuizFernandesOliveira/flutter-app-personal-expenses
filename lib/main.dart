@@ -1,6 +1,5 @@
-import 'package:app_personal_expenses/models/expense.dart';
+import 'package:app_personal_expenses/components/expense_user.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 void main() => runApp(PersonalExpensesApp());
 
@@ -15,10 +14,6 @@ class PersonalExpensesApp extends StatelessWidget {
 }
 
 class HomePage extends StatelessWidget {
-  final _expenses = [
-    Expense(id: 'e1', title: 'novo celular', value: 2000, date: DateTime.now()),
-    Expense(id: 'e2', title: 'conta de luz', value: 200, date: DateTime.now()),
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +22,6 @@ class HomePage extends StatelessWidget {
         title: Text('Despesas Pessoais'),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Container(
@@ -37,53 +31,7 @@ class HomePage extends StatelessWidget {
               elevation: 5,
             ),
           ),
-          Column(
-            children: _expenses.map((e) => Card(
-              child: Row(
-                children: [
-                  Container(
-                    margin: const EdgeInsets.symmetric(
-                      horizontal: 15,
-                      vertical: 10,
-                    ),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.purple,
-                        width: 2
-                      ),
-                    ),
-                    padding: const EdgeInsets.all(10),
-                    child: Text(
-                      'R\$ ${e.value.toStringAsFixed(2)}',
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        color: Colors.purple,
-                      ),
-                    ),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        e.title,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        DateFormat('d MMM y').format(e.date),
-                        style: const TextStyle(
-                          color: Colors.grey,
-                        ),
-                      )
-                    ],
-                  )
-                ],
-              ),
-            )).toList()
-          )
+          ExpenseUser(),
         ],
       ),
     );
