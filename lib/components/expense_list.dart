@@ -37,45 +37,32 @@ class ExpenseList extends StatelessWidget {
           itemBuilder: (ctx, index) {
             final expense = expenses[index];
             return Card(
-              child: Row(
-                children: [
-                  Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                          color: Theme.of(context).primaryColor,
-                          width: 2
-                      ),
-                    ),
-                    padding: const EdgeInsets.all(10),
-                    child: Text(
-                      'R\$ ${expense.value.toStringAsFixed(2)}',
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        color: Colors.purple,
-                      ),
+              elevation: 5,
+              margin: EdgeInsets.symmetric(
+                vertical: 8,
+                horizontal: 5,
+              ),
+              child: ListTile(
+                leading: CircleAvatar(
+                  radius: 30,
+                  child: Padding(
+                    padding: const EdgeInsets.all(6),
+                    child: FittedBox(
+                        child: Text('R\$${expense.value}'),
                     ),
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        expense.title,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        DateFormat('d MMM y').format(expense.date),
-                        style: const TextStyle(
-                          color: Colors.grey,
-                        ),
-                      )
-                    ],
-                  )
-                ],
+                ),
+                title: Text(
+                  expense.title,
+                  style: TextStyle(
+                    fontFamily: 'Roboto',
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                subtitle: Text(
+                  DateFormat('d MMM y').format(expense.date),
+                ),
               ),
             );
           },

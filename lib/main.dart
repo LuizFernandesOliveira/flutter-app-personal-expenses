@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:app_personal_expenses/components/expense_form.dart';
+import 'package:app_personal_expenses/components/graphic.dart';
 import 'package:flutter/material.dart';
 import 'components/expense_list.dart';
 import 'models/expense.dart';
@@ -35,9 +36,15 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final List<Expense> _expenses = [
-    // Expense(id: 'e1', title: 'novo celular', value: 2000, date: DateTime.now()),
-    // Expense(id: 'e2', title: 'conta de luz', value: 200, date: DateTime.now()),
+    Expense(id: 'e1', title: 'novo celular', value: 2000, date: DateTime.now()),
+    Expense(id: 'e2', title: 'conta de luz', value: 200, date: DateTime.now().subtract(Duration(days: 1))),
   ];
+
+  List<Expense> get _recentExpenses {
+    return _expenses.where((e) {
+      return e.date.isAfter(DateTime.now().subtract(const Duration(days: 7)));
+    }).toList();
+  }
 
   _addExpense(String title, double value) {
     final newExpense = Expense(
@@ -77,13 +84,7 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Container(
-              child: const Card(
-                color: Colors.blue,
-                child: Text('Grafico'),
-                elevation: 5,
-              ),
-            ),
+            Graphic(recentExpenses: _recentExpenses),
             ExpenseList(expenses: _expenses),
           ],
         ),

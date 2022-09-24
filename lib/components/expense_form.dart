@@ -48,17 +48,35 @@ class _ExpenseFormState extends State<ExpenseForm> {
                   labelText: 'Valor (R\$):'
               ),
             ),
+            Container(
+              height: 70,
+              child: Row(
+                children: [
+                  Text('Nenhuma data selecionada!'),
+                  TextButton(
+                    onPressed: () {},
+                    child: Text(
+                      'Selecionar data',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                TextButton(
+                ElevatedButton(
                   onPressed: _submitForm,
                   child: Text('Nova Despesa'),
                   style: TextButton.styleFrom(
                     textStyle: const TextStyle(
                       fontSize: 20,
+                      fontWeight: FontWeight.bold,
                     ),
-                    foregroundColor: Colors.purple,
+                    foregroundColor: Colors.white,
                   ),
                 ),
               ],
