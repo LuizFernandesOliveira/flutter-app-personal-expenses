@@ -34,9 +34,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final _expenses = [
-    Expense(id: 'e1', title: 'novo celular', value: 2000, date: DateTime.now()),
-    Expense(id: 'e2', title: 'conta de luz', value: 200, date: DateTime.now()),
+  final List<Expense> _expenses = [
+    // Expense(id: 'e1', title: 'novo celular', value: 2000, date: DateTime.now()),
+    // Expense(id: 'e2', title: 'conta de luz', value: 200, date: DateTime.now()),
   ];
 
   _addExpense(String title, double value) {

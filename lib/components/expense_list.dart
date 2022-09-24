@@ -11,7 +11,28 @@ class ExpenseList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 300,
-      child: ListView.builder(
+      child: expenses.isEmpty
+        ? Column(
+          children: [
+            const Text(
+              'Nenhuma Despesa Cadastrada',
+              style: TextStyle(
+                fontFamily: 'Roboto',
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 50),
+            Container(
+              width: 200,
+              child: Image.asset(
+                'assets/images/zzz.png',
+                fit: BoxFit.cover,
+              ),
+            ),
+          ],
+        )
+        : ListView.builder(
           itemCount: expenses.length,
           itemBuilder: (ctx, index) {
             final expense = expenses[index];
