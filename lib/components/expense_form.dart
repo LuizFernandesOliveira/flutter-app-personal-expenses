@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ExpenseForm extends StatefulWidget {
-  final void Function(String, double) onSubmit;
+  final void Function(String, double, DateTime) onSubmit;
 
   ExpenseForm({required this.onSubmit});
 
@@ -10,19 +11,36 @@ class ExpenseForm extends StatefulWidget {
 }
 
 class _ExpenseFormState extends State<ExpenseForm> {
-  final titleController = TextEditingController();
-
-  final valueController = TextEditingController();
+  final _titleController = TextEditingController();
+  final _valueController = TextEditingController();
+  DateTime _selectDate = DateTime.now();
 
   _submitForm() {
-    final title = titleController.text;
-    final value = double.tryParse(valueController.text) ?? 0.0;
+    final title = _titleController.text;
+    final value = double.tryParse(_valueController.text) ?? 0.0;
 
     if (title.isEmpty || value <= 0) {
       return;
     }
 
-    widget.onSubmit(title, value);
+    widget.onSubmit(title, value, _selectDate);
+  }
+
+  _showDatePicker() {
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2021),
+      lastDate: DateTime.now(),
+    ).then((value) {
+      if (value == null) {
+        return;
+      }
+
+      setState(() {
+        _selectDate = value;
+      });
+    });
   }
 
   @override
@@ -34,28 +52,29 @@ class _ExpenseFormState extends State<ExpenseForm> {
         child: Column(
           children: [
             TextField(
-              controller: titleController,
+              controller: _titleController,
               onSubmitted: (_) => _submitForm(),
-              decoration: InputDecoration(
-                  labelText: 'Titulo:'
-              ),
+              decoration: const InputDecoration(labelText: 'Titulo:'),
             ),
             TextField(
-              controller: valueController,
-              keyboardType: const TextInputType.numberWithOptions(decimal: true),
+              controller: _valueController,
+              keyboardType:
+                  const TextInputType.numberWithOptions(decimal: true),
               onSubmitted: (_) => _submitForm(),
-              decoration: const InputDecoration(
-                  labelText: 'Valor (R\$):'
-              ),
+              decoration: const InputDecoration(labelText: 'Valor (R\$):'),
             ),
             Container(
               height: 70,
               child: Row(
                 children: [
-                  Text('Nenhuma data selecionada!'),
+                  Expanded(
+                    child: Text(_selectDate == null
+                        ? 'Nenhuma data selecionada!'
+                        : DateFormat('dd/MM/y').format(_selectDate)),
+                  ),
                   TextButton(
-                    onPressed: () {},
-                    child: Text(
+                    onPressed: _showDatePicker,
+                    child: const Text(
                       'Selecionar data',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,

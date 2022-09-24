@@ -35,10 +35,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final List<Expense> _expenses = [
-    Expense(id: 'e1', title: 'novo celular', value: 2000, date: DateTime.now()),
-    Expense(id: 'e2', title: 'conta de luz', value: 200, date: DateTime.now().subtract(Duration(days: 1))),
-  ];
+  final List<Expense> _expenses = [];
 
   List<Expense> get _recentExpenses {
     return _expenses.where((e) {
@@ -46,17 +43,23 @@ class _HomePageState extends State<HomePage> {
     }).toList();
   }
 
-  _addExpense(String title, double value) {
+  _addExpense(String title, double value, DateTime date) {
     final newExpense = Expense(
         id: Random().nextDouble().toString(),
         title: title,
         value: value,
-        date: DateTime.now()
+        date: date,
     );
     setState(() {
       _expenses.add(newExpense);
     });
     Navigator.of(context).pop();
+  }
+
+  _deleteExpense(String id) {
+    setState(() {
+      _expenses.removeWhere((element) => element.id == id);
+    });
   }
 
   _openExpenseFormModal(BuildContext context) {
@@ -85,7 +88,7 @@ class _HomePageState extends State<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Graphic(recentExpenses: _recentExpenses),
-            ExpenseList(expenses: _expenses),
+            ExpenseList(expenses: _expenses, onDelete: _deleteExpense),
           ],
         ),
       ),
