@@ -8,6 +8,17 @@ class ExpenseForm extends StatelessWidget {
 
   ExpenseForm({required this.onSubmit});
 
+  _submitForm() {
+    final title = titleController.text;
+    final value = double.tryParse(valueController.text) ?? 0.0;
+
+    if (title.isEmpty || value <= 0) {
+      return;
+    }
+
+    onSubmit(title, value);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -18,13 +29,16 @@ class ExpenseForm extends StatelessWidget {
           children: [
             TextField(
               controller: titleController,
+              onSubmitted: (_) => _submitForm(),
               decoration: InputDecoration(
                   labelText: 'Titulo:'
               ),
             ),
             TextField(
               controller: valueController,
-              decoration: InputDecoration(
+              keyboardType: const TextInputType.numberWithOptions(decimal: true),
+              onSubmitted: (_) => _submitForm(),
+              decoration: const InputDecoration(
                   labelText: 'Valor (R\$):'
               ),
             ),
@@ -32,12 +46,7 @@ class ExpenseForm extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 TextButton(
-                  onPressed: () {
-                    final title = titleController.text;
-                    final value = double.tryParse(valueController.text) ?? 0.0;
-
-                    onSubmit(title, value);
-                  },
+                  onPressed: _submitForm,
                   child: Text('Nova Despesa'),
                   style: TextButton.styleFrom(
                     textStyle: const TextStyle(
