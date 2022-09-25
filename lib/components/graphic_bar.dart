@@ -25,8 +25,8 @@ class GraphicBar extends StatelessWidget {
         ),
         SizedBox(height: 5),
         Container(
-          height: 60,
-          width: 10,
+          height: 80,
+          width: 30,
           child: Stack(
             alignment: Alignment.bottomCenter,
             children: [

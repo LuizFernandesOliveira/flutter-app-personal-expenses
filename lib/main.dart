@@ -86,6 +86,7 @@ class _HomePageState extends State<HomePage> {
             icon: const Icon(Icons.add)
           ),
         ],
+        toolbarHeight: 80,
       ),
       body: SingleChildScrollView(
         child: Column(
