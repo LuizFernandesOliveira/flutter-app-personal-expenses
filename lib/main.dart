@@ -1,9 +1,9 @@
 import 'dart:math';
 
-import 'package:app_personal_expenses/components/expense_form.dart';
+import 'package:app_personal_expenses/components/form.dart';
 import 'package:app_personal_expenses/components/graphic.dart';
 import 'package:flutter/material.dart';
-import 'components/expense_list.dart';
+import 'components/list.dart';
 import 'models/expense.dart';
 
 void main() => runApp(PersonalExpensesApp());
@@ -35,7 +35,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final List<Expense> _expenses = [];
+  final List<Expense> _expenses = [
+    Expense(id: 't1', title: 'produto 1', value: 2000, date: DateTime.now().subtract(Duration(days: 6))),
+    Expense(id: 't2', title: 'produto 2', value: 1000, date: DateTime.now().subtract(Duration(days: 5))),
+    Expense(id: 't3', title: 'produto 3', value: 1000, date: DateTime.now()),
+  ];
 
   List<Expense> get _recentExpenses {
     return _expenses.where((e) {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class GraphicBar extends StatelessWidget {
   final String label;
@@ -17,8 +18,9 @@ class GraphicBar extends StatelessWidget {
       children: [
         Container(
           height: 20,
+          margin: EdgeInsets.symmetric(horizontal: 3),
           child: FittedBox(
-            child: Text(value.toStringAsFixed(2)),
+            child: Text(NumberFormat("#,##0.00", "pt_BR").format(value)),
           ),
         ),
         SizedBox(height: 5),

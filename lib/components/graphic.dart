@@ -8,6 +8,16 @@ class Graphic extends StatelessWidget {
 
   Graphic({required this.recentExpenses});
 
+  Map<String, String> weekDaysMapped = {
+    'Mon': 'Seg',
+    'Tue': 'Ter',
+    'Wed': 'Qua',
+    'Thu': 'Qui',
+    'Fri': 'Sex',
+    'Sat': 'Sab',
+    'Sun': 'Dom',
+  };
+
   List<Map<String, Object>> get groupedExpenses {
     return List.generate(7, (index) {
       final weekDay = DateTime.now().subtract(
@@ -27,7 +37,7 @@ class Graphic extends StatelessWidget {
       }
 
       return {
-        'day': DateFormat.E().format(weekDay)[0],
+        'day': weekDaysMapped[DateFormat('EEE').format(weekDay)].toString(),
         'value': valueTotal,
       };
     }).reversed.toList();
@@ -43,7 +53,7 @@ class Graphic extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 6,
-      margin: EdgeInsets.all(20),
+      margin: EdgeInsets.all(10),
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: Row(

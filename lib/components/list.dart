@@ -23,7 +23,7 @@ class ExpenseList extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 50),
+            const SizedBox(height: 50),
             Container(
               width: 200,
               child: Image.asset(
@@ -39,7 +39,7 @@ class ExpenseList extends StatelessWidget {
             final expense = expenses[index];
             return Card(
               elevation: 5,
-              margin: EdgeInsets.symmetric(
+              margin: const EdgeInsets.symmetric(
                 vertical: 8,
                 horizontal: 5,
               ),
@@ -49,13 +49,13 @@ class ExpenseList extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(6),
                     child: FittedBox(
-                        child: Text('R\$${expense.value}'),
+                        child: Text('R\$${NumberFormat("#,##0.00", "pt_BR").format(expense.value)}'),
                     ),
                   ),
                 ),
                 title: Text(
                   expense.title,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontFamily: 'Roboto',
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -65,7 +65,7 @@ class ExpenseList extends StatelessWidget {
                   DateFormat('d MMM y').format(expense.date),
                 ),
                 trailing: IconButton(
-                  icon: Icon(Icons.delete),
+                  icon: const Icon(Icons.delete),
                   color: Colors.red,
                   onPressed: () => onDelete(expense.id),
                 ),
