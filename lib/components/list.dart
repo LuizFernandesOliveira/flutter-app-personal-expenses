@@ -17,7 +17,7 @@ class ExpenseList extends StatelessWidget {
                 children: [
                   SizedBox(height: constraints.maxHeight * 0.05),
                   Container(
-                    height: constraints.maxHeight * 0.3,
+                    height: constraints.maxHeight * 0.1,
                     child: const Text(
                       'Nenhuma Despesa Cadastrada',
                       style: TextStyle(
@@ -29,7 +29,7 @@ class ExpenseList extends StatelessWidget {
                   ),
                   SizedBox(height: constraints.maxHeight * 0.05),
                   Container(
-                    width: constraints.maxHeight * 0.6,
+                    width: constraints.maxHeight * 0.8,
                     child: Image.asset(
                       'assets/images/zzz.png',
                       fit: BoxFit.cover,

@@ -1,7 +1,9 @@
 import 'dart:math';
+import 'dart:io';
 
 import 'package:app_personal_expenses/components/form.dart';
 import 'package:app_personal_expenses/components/graphic.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'components/list.dart';
 import 'models/expense.dart';
@@ -105,11 +107,12 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    bool isLandscape =
-        MediaQuery.of(context).orientation == Orientation.landscape;
-    final appBar = AppBar(
-      title: Text('Despesas Pessoais'),
-      actions: [
+    final mediaQuery = MediaQuery.of(context);
+    bool isLandscape = mediaQuery.orientation == Orientation.landscape;
+
+    final PreferredSizeWidget appBar = AppBar(
+      title: const Text('Despesas Pessoais'),
+      actions: <Widget>[
         if (isLandscape)
           IconButton(
               onPressed: () {
@@ -124,33 +127,37 @@ class _HomePageState extends State<HomePage> {
       ],
       toolbarHeight: 80,
     );
-    final availableHeight = MediaQuery.of(context).size.height -
+    final availableHeight = mediaQuery.size.height -
         appBar.preferredSize.height -
-        MediaQuery.of(context).padding.top;
+        mediaQuery.padding.top;
+
+    final bodyPage = Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        if (_showGraphic || !isLandscape)
+          Container(
+            height: availableHeight * (isLandscape ? 1 : 0.2),
+            child: Graphic(recentExpenses: _recentExpenses),
+          ),
+        if (!_showGraphic || !isLandscape)
+          Container(
+              height: availableHeight * (isLandscape ? 1 : 0.8),
+              child:
+                  ExpenseList(expenses: _expenses, onDelete: _deleteExpense)),
+      ],
+    );
 
     return Scaffold(
       appBar: appBar,
       body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            if (_showGraphic || !isLandscape)
-              Container(
-                height: availableHeight * (isLandscape ? 0.8 : 0.2),
-                child: Graphic(recentExpenses: _recentExpenses),
-              ),
-            if (!_showGraphic || !isLandscape)
-              Container(
-                  height: availableHeight * 0.8,
-                  child: ExpenseList(
-                      expenses: _expenses, onDelete: _deleteExpense)),
-          ],
-        ),
+        child: bodyPage,
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _openExpenseFormModal(context),
-        child: const Icon(Icons.add),
-      ),
+      floatingActionButton: Platform.isIOS
+          ? Container()
+          : FloatingActionButton(
+              onPressed: () => _openExpenseFormModal(context),
+              child: const Icon(Icons.add),
+            ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
